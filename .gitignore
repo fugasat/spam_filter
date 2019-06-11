@@ -3,7 +3,7 @@ test/
 train/
 sample_submit.csv
 train_master.tsv
-
+model.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

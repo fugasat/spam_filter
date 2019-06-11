@@ -10,7 +10,7 @@ from keras.utils.np_utils import to_categorical
 
 
 def create_label(path):
-    df = pd.read_table(path)
+    df = pd.read_csv(path, sep="\t")
     return dict(zip(list(df.file_name), list(df.label)))
 
 

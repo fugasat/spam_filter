@@ -1,5 +1,5 @@
-import src.util as util
-import src.model as model
+import util as util
+import model as model
 
 
 # read source data

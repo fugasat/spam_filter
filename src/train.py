@@ -7,10 +7,10 @@ from src import util, model
 if __name__ == '__main__':
     # read source data
     label_dict = util.create_label('./train_master.tsv')
-    sentences, labels = util.read_train_file("./train/", "train_000*.txt", label_dict)
+    sentences_train, labels, train_files = util.read_data("./train/", "train_000*.txt", label_dict)
+    sentences_test, labels_test, test_files = util.read_data("./test/", "test_000*.txt", None)
 
-    word2id, vocab_size = util.create_word2id(sentences)
-    train, seq_length = util.create_train_data(sentences, word2id)
+    train, test, seq_length, vocab_size = util.create_train_data(sentences_train, sentences_test)
 
     # create model
     embedding_dim = 100  # 単語ベクトルの次元数
@@ -23,16 +23,9 @@ if __name__ == '__main__':
     batch_size = 50
     model.fit(train, labels, epochs=epoch_size, batch_size=batch_size)
 
-    results = model.predict(train)
+    results = model.predict(test)
     model.save('model.h5', include_optimizer=False)
-    print("predict:", results)
-    print("label:", labels)
+    #print("predict:", results)
 
-    result_submit = []
-    for r in results:
-        if r[0] > r[1]:
-            result_submit.append(1)
-        else:
-            result_submit.append(0)
-
+    result_submit = util.to_result_submit(results, test_files)
     print("submit:", result_submit)

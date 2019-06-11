@@ -20,14 +20,14 @@ def normalization(s):
     return s
 
 
-def read_train_file(path, file_filter, label_dict):
+def read_data(path, file_filter, label_dict):
     sentences = []
     labels = []
-    train_path = Path(path)
-    train_files = list(train_path.glob(file_filter))
+    file_path = Path(path)
+    data_files = list(file_path.glob(file_filter))
 
-    for train_file in train_files:
-        with open(train_file) as f:
+    for data_file in data_files:
+        with open(data_file) as f:
             s = f.read()
             s = normalization(s)
 
@@ -35,11 +35,14 @@ def read_train_file(path, file_filter, label_dict):
             s = s[1:]  # 先頭のsubjectを除去
 
             sentences.append(s)
-            labels.append(label_dict[os.path.basename(train_file)])
 
-    labels = to_categorical(labels)
+            if label_dict:
+                labels.append(label_dict[os.path.basename(data_file)])
 
-    return sentences, labels
+    if label_dict:
+        labels = to_categorical(labels)
+
+    return sentences, labels, data_files
 
 
 def create_word2id(sentences):
@@ -57,12 +60,28 @@ def create_word2id(sentences):
     return word2id, vocab_size
 
 
-def create_train_data(sentences, word2id):
-    train = [[word2id.get(w, 0) for w in s] for s in sentences]
+def create_train_data(sentences_train, sentences_test):
+    word2id, vocab_size = create_word2id(sentences_train + sentences_test)
+    train = [[word2id.get(w, 0) for w in s] for s in sentences_train]
+    test = [[word2id.get(w, 0) for w in s] for s in sentences_test]
+
     target_len = []
     for t in train:
+        target_len.append(len(t))
+    for t in test:
         target_len.append(len(t))
 
     seq_length = max(target_len)  # 入力ベクトルの次元数（文章の長さ）
     train = pad_sequences(train, maxlen=seq_length, dtype=np.int32, padding='post', truncating='post', value=0)
-    return train, seq_length
+    test = pad_sequences(test, maxlen=seq_length, dtype=np.int32, padding='post', truncating='post', value=0)
+    return train, test, seq_length, vocab_size
+
+
+def to_result_submit(results, test_files):
+    result_submit = []
+    for r in results:
+        if r[0] > r[1]:
+            result_submit.append(1)
+        else:
+            result_submit.append(0)
+    return result_submit

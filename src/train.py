@@ -20,8 +20,8 @@ class LossHistory(Callback):
 
 
 if __name__ == '__main__':
-    train_file_filter = "train_00*.txt"
-    test_file_filter = "test_000*.txt"
+    train_file_filter = "train_*.txt"
+    test_file_filter = "test_*.txt"
     embedding_dim = 300  # 単語ベクトルの次元数
     lstm_units = 150  # LSTMの隠れ状態ベクトルの次元数
     epoch_size = 5

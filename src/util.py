@@ -18,7 +18,8 @@ def create_label(path):
 
 def normalization(s):
     s = s.lower()
-    s = re.sub("[0-9!-@[-_{-~]", "", s)  # 数字と記号を除去
+    s = re.sub("[!-@[-_{-~]", "", s)  # 記号を除去
+    s = re.sub("[0-9]", "999", s)  # 数字を変換
     return s
 
 

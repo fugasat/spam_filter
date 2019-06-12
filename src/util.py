@@ -55,7 +55,7 @@ def create_word2id(sentences):
 
     word2id = {'<unk>': 0}
     for w, v in vocab.items():
-        if w not in word2id and v >= 2:
+        if w not in word2id and v >= 1:
             word2id[w] = len(word2id)
 
     vocab_size = len(word2id.keys())  # 扱う語彙の数

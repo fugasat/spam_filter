@@ -4,6 +4,7 @@ train/
 sample_submit.csv
 train_master.tsv
 model.*
+#results/*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

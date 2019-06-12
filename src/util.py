@@ -79,9 +79,9 @@ def create_train_data(sentences_train, sentences_test):
 
 def to_result_submit(results, test_files):
     result_submit = []
-    for r in results:
+    for i, r in enumerate(results):
+        result_flag = 0
         if r[0] > r[1]:
-            result_submit.append(1)
-        else:
-            result_submit.append(0)
+            result_flag = 1
+        result_submit.append([os.path.basename(test_files[i]), result_flag])
     return result_submit

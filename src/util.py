@@ -59,7 +59,7 @@ def create_word2id(sentences):
     return word2id, vocab_size
 
 
-def create_train_data(sentences_train, sentences_test):
+def create_train_data(sentences_train, sentences_test, seq_length):
     word2id, vocab_size = create_word2id(sentences_train + sentences_test)
     train = [[word2id.get(w, 0) for w in s] for s in sentences_train]
     test = [[word2id.get(w, 0) for w in s] for s in sentences_test]
@@ -70,7 +70,8 @@ def create_train_data(sentences_train, sentences_test):
     for t in test:
         target_len.append(len(t))
 
-    seq_length = max(target_len)  # 入力ベクトルの次元数（文章の長さ）
+    if seq_length <= 0:
+        seq_length = max(target_len)  # 入力ベクトルの次元数（文章の長さ）
     train = pad_sequences(train, maxlen=seq_length, dtype=np.int32, padding='post', truncating='post', value=0)
     test = pad_sequences(test, maxlen=seq_length, dtype=np.int32, padding='post', truncating='post', value=0)
     return train, test, seq_length, vocab_size

@@ -22,17 +22,18 @@ class LossHistory(Callback):
 if __name__ == '__main__':
     train_file_filter = "train_*.txt"
     test_file_filter = "test_*.txt"
-    embedding_dim = 300  # 単語ベクトルの次元数
-    lstm_units = 150  # LSTMの隠れ状態ベクトルの次元数
+    seq_length = 150
+    embedding_dim = 50  # 単語ベクトルの次元数
+    lstm_units = 50  # LSTMの隠れ状態ベクトルの次元数
     epoch_size = 5
-    batch_size = 50
+    batch_size = 20
 
     # read source data
     label_dict = util.create_label('./train_master.tsv')
     sentences_train, labels, train_files = util.read_data("./train/", train_file_filter, label_dict)
     sentences_test, labels_test, test_files = util.read_data("./test/", test_file_filter, None)
 
-    train, test, seq_length, vocab_size = util.create_train_data(sentences_train, sentences_test)
+    train, test, seq_length, vocab_size = util.create_train_data(sentences_train, sentences_test, seq_length)
 
     X_train, X_test, y_train, y_test = train_test_split(train,
                                                         labels,

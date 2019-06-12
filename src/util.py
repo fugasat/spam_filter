@@ -41,9 +41,6 @@ def read_data(path, file_filter, label_dict):
             if label_dict:
                 labels.append(label_dict[os.path.basename(data_file)])
 
-    #if label_dict:
-    #    labels = to_categorical(labels)
-
     return sentences, labels, data_files
 
 
@@ -83,7 +80,6 @@ def to_result_submit(results, test_files):
     result_submit = []
     for i, r in enumerate(results):
         result_flag = 0
-        #if r[0] > r[1]:
         if r[0] > 0.5:
                 result_flag = 1
         result_submit.append([os.path.basename(test_files[i]), result_flag])

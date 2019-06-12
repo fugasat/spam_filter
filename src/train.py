@@ -20,11 +20,11 @@ class LossHistory(Callback):
 
 
 if __name__ == '__main__':
-    train_file_filter = "train_*.txt"
-    test_file_filter = "test_*.txt"
+    train_file_filter = "train_00*.txt"
+    test_file_filter = "test_000*.txt"
     embedding_dim = 300  # 単語ベクトルの次元数
     lstm_units = 150  # LSTMの隠れ状態ベクトルの次元数
-    epoch_size = 20
+    epoch_size = 5
     batch_size = 50
 
     # read source data
@@ -46,11 +46,10 @@ if __name__ == '__main__':
     # train param
     print(train)
     print(labels)
-    #model.fit(train, labels, epochs=epoch_size, batch_size=batch_size)
     losshist = LossHistory()
     model.fit(X_train, y_train, verbose=2,
               batch_size=batch_size,
-              nb_epoch=epoch_size,
+              epochs=epoch_size,
               validation_data=[X_test, y_test],
               callbacks=[losshist])
 

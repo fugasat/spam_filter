@@ -41,8 +41,9 @@ if __name__ == '__main__':
                                                         random_state=random.randint(0, 100))
 
     # create model
-    model = model.create(
+    model = model.create_bidirectional(
         vocab_size=vocab_size, embedding_dim=embedding_dim, seq_length=seq_length, lstm_units=lstm_units)
+    #model = model.create_3layer(seq_length=seq_length)
 
     # train param
     print(train)

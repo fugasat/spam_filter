@@ -25,8 +25,8 @@ if __name__ == '__main__':
     seq_length = 150
     embedding_dim = 50  # 単語ベクトルの次元数
     lstm_units = 50  # LSTMの隠れ状態ベクトルの次元数
-    epoch_size = 5
-    batch_size = 20
+    epoch_size = 50
+    batch_size = 50
 
     # read source data
     label_dict = util.create_label('./train_master.tsv')
@@ -41,9 +41,9 @@ if __name__ == '__main__':
                                                         random_state=random.randint(0, 100))
 
     # create model
-    model = model.create_bidirectional(
-        vocab_size=vocab_size, embedding_dim=embedding_dim, seq_length=seq_length, lstm_units=lstm_units)
-    #model = model.create_3layer(seq_length=seq_length)
+    #model = model.create_bidirectional(
+    #    vocab_size=vocab_size, embedding_dim=embedding_dim, seq_length=seq_length, lstm_units=lstm_units)
+    model = model.create_3layer(seq_length=seq_length)
 
     # train param
     print(train)

@@ -28,9 +28,9 @@ def create_3layer(seq_length):
     """
     model = Sequential()
     model.add(Dense(512, activation='relu', input_shape=(seq_length,)))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.5))
     model.add(Dense(512, activation='relu'))
-    model.add(Dropout(0.2))
+    model.add(Dropout(0.5))
     model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer=RMSprop(), loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer=Adam(), loss='binary_crossentropy', metrics=['accuracy'])
     return model
